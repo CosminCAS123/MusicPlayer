@@ -1,0 +1,118 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="500"
+			 xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             x:Class="MusicPlayer.Views.LoginView"
+			 xmlns:viewmodels ="clr-namespace:MusicPlayer.ViewModels;assembly=MusicPlayer"
+			 xmlns:views="clr-namespace:MusicPlayer.Views;assembly=MusicPlayer"
+			 x:DataType="viewmodels:LoginVM"
+			 x:CompileBindings="True">
+	
+	<Grid >
+		<Grid.ColumnDefinitions>
+			*,*
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			*,*,*,*,*
+		</Grid.RowDefinitions>
+		<Label HorizontalAlignment="Center"
+			  Grid.Row="0"
+			   VerticalAlignment="Center"
+			   Grid.Column="0"
+			   FontSize="25"
+			   Grid.RowSpan="2"
+			   >
+			Enter your account
+		</Label>
+
+		<Rectangle Grid.Column="1"
+				   Grid.RowSpan="5"
+				   Fill="{StaticResource ResourceKey=colorTwo}"
+				   >
+		</Rectangle>
+		<TextBox Grid.Row="1"
+				 Watermark="Email"
+				 Margin="20,60,20,0"
+				 Background="GhostWhite"
+				 Height="60"
+				 FontSize="20"
+				 VerticalContentAlignment="Center"
+				 Text="{Binding Email , Mode=TwoWay}"
+				 >
+		</TextBox>
+		<TextBox Grid.Row="2"
+				 Watermark="Password"
+				 Background="GhostWhite"
+			     Classes="revealPasswordButton" PasswordChar="•"
+				 Margin="20,30,20,0"
+				 Height="60"
+				 FontSize="20"
+				 Text="{Binding Password, Mode=TwoWay}"
+				 VerticalContentAlignment="Center"
+				 
+				 >
+		</TextBox>
+		<TextBlock Classes="UnderlineOnHover"
+				   Grid.Row="3"
+				   HorizontalAlignment="Right"
+				   Margin="0 , 5 , 30 , 0"
+				   PointerPressed="NoAccountPressed">
+			Don't have an account?
+		</TextBlock>
+		<Image Source="/Assets/musiclogo.png"
+			   Grid.Row="0"
+		      Margin="0 , 20 , 0 , 0"
+			   Grid.Column="1"
+			   />
+		<TextBlock Grid.Row="1"
+				   Grid.Column="1"
+				   Margin="0 , 20 , 0 , 0"
+				   HorizontalAlignment="Center"
+				   FontSize="28"
+				   Foreground="White"
+				   >Music Player <LineBreak/>- Solodeving</TextBlock>
+		<TextBlock Grid.Row="2"
+				   Grid.Column="1"
+				   Margin="0 , 20 , 0 , 0"
+				   HorizontalAlignment="Center"
+				   FontSize="18"
+				   Foreground="White"
+				   Grid.RowSpan="3"
+				   >
+			
+			Listen to your favorite music for <LineBreak/>
+			<LineBreak/>
+			free and without ADS just by entering <LineBreak/>
+			<LineBreak/>
+			your account!
+		</TextBlock>
+		
+		
+		<Button Grid.Row="3"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Bottom"
+				CornerRadius="8"
+				Foreground="White"
+				Background="{StaticResource ResourceKey=colorTwo}"
+				FontSize="20"
+				BorderThickness="5"
+				>
+			Log In
+		</Button>
+
+		<dialogHostAvalonia:DialogHost Identifier="NoAccountDialogHost"
+									   Grid.ColumnSpan="2"
+									   Grid.RowSpan="5"
+									  
+									 >
+			<dialogHostAvalonia:DialogHost.DataTemplates>
+				<DataTemplate DataType="viewmodels:RegisterVM">
+					<views:RegisterView />
+				</DataTemplate>
+			</dialogHostAvalonia:DialogHost.DataTemplates>
+		</dialogHostAvalonia:DialogHost>
+		
+	</Grid>
+</UserControl>

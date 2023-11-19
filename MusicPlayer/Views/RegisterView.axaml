@@ -1,0 +1,106 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewmodels="clr-namespace:MusicPlayer.ViewModels;assembly=MusicPlayer"
+			  xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+		     BorderBrush="Red"
+			 x:DataType="viewmodels:RegisterVM"
+			
+			 x:CompileBindings="True"
+             x:Class="MusicPlayer.Views.RegisterView">
+
+	<UserControl.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="Background" Value="AliceBlue"/>
+			<Setter Property="Foreground" Value="Black"/>
+		</Style>
+	</UserControl.Styles>
+
+	<Design.DataContext>
+		<viewmodels:RegisterVM/>
+	</Design.DataContext>
+	
+	<Grid RowDefinitions="* , * , * , *"
+		  Width="400"
+		  Height="400"
+		  
+		   Background ="{StaticResource ResourceKey=colorTwo}">
+
+
+		
+		<Label Foreground="Black"
+			   HorizontalAlignment="Center"
+			   Margin="0 , 20 , 0 , 0"
+			   Grid.Row="1"
+			   IsVisible="{Binding EmailErrorVisible , Mode=OneWay}"
+			   >
+	        Email is used by another account!
+		</Label>
+		<Label Foreground="Black"
+			   HorizontalAlignment="Center"
+			   Grid.Row="3"
+			   Margin="0 , 70 , 0 , 0"
+			   IsVisible="{Binding SuccessVisible , Mode = OneWay}"
+			   >
+			Success!
+			
+		</Label>
+		
+		
+		
+		
+		
+		
+		<TextBox Watermark="Username"
+				 Text="{Binding Username, Mode=TwoWay}"
+				 Margin="30 , 50 , 30 , 0"
+			     VerticalContentAlignment="Bottom"
+				 CornerRadius="14"
+				>
+		</TextBox>
+		
+		<TextBox Watermark="Email"
+				 CornerRadius="14"
+				 Grid.Row="1"
+				 Margin="30 , 50 , 30 , 0"
+                 Text="{Binding Email ,Mode=TwoWay}"
+				 VerticalContentAlignment="Bottom">
+
+		</TextBox>
+		
+		<TextBox Watermark="Password"
+			     Classes="revealPasswordButton" PasswordChar="•"
+				 Grid.Row="2"
+				 Margin="30 , 50 , 30 , 0"
+				 CornerRadius="14"
+		         Text="{Binding Password, Mode=TwoWay}"
+				 VerticalContentAlignment="Bottom"
+				 >
+		</TextBox>
+		
+		
+		
+		
+		
+		
+		<Button Grid.Row="3"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Width="100"
+				Height="30"
+				FontSize="15"
+				HorizontalContentAlignment="Center"
+				Foreground="Black"
+			    Background="Purple"
+			    VerticalContentAlignment="Bottom"
+				Command="{Binding RegisterCommand}"
+				CommandParameter="{Binding $parent[dialogHostAvalonia:DialogHost]}"
+				
+				>
+			Register
+		</Button>
+	</Grid>
+	
+</UserControl>
