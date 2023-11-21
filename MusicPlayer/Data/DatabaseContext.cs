@@ -10,7 +10,7 @@ namespace MusicPlayer.Data
 {
     public class DatabaseContext : DbContext
     {
-        private string connectionstring = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+        private string connectionstring = "";
 
         public DbSet <User> Credentials { get; set; }
         public DbSet<UserPreferences> Preferences { get; set; }

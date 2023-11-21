@@ -10,6 +10,7 @@
 			 x:DataType="viewmodels:LoginVM"
 			 x:CompileBindings="True">
 	
+	
 	<Grid >
 		<Grid.ColumnDefinitions>
 			*,*
@@ -27,6 +28,20 @@
 			Enter your account
 		</Label>
 
+
+
+		<Label Grid.Row="1"
+			   Margin="20 , 38 , 0 , 0"
+			   IsVisible="{Binding ShowEmailError , Mode=OneWay}">
+			Email was not found.
+		</Label>
+		
+		<Label Grid.Row="2"
+			   Margin="20 ,9, 0 , 0 "
+			   IsVisible="{Binding ShowPasswordError , Mode=OneWay}">
+			Incorrect password.
+		</Label>
+		
 		<Rectangle Grid.Column="1"
 				   Grid.RowSpan="5"
 				   Fill="{StaticResource ResourceKey=colorTwo}"
@@ -80,6 +95,7 @@
 				   FontSize="18"
 				   Foreground="White"
 				   Grid.RowSpan="3"
+			    
 				   >
 			
 			Listen to your favorite music for <LineBreak/>
@@ -96,6 +112,7 @@
 				CornerRadius="8"
 				Foreground="White"
 				Background="{StaticResource ResourceKey=colorTwo}"
+				Command="{Binding LoginCommand}"
 				FontSize="20"
 				BorderThickness="5"
 				>

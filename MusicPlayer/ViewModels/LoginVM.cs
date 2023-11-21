@@ -16,6 +16,18 @@ namespace MusicPlayer.ViewModels
 
         private string? email;
         private string? password;
+        private bool showemailerror = false;
+        private bool showpassworderror = false;
+        public bool ShowEmailError
+        {
+            get => this.showemailerror;
+            set => this.RaiseAndSetIfChanged(ref this.showemailerror, value);
+        }
+        public bool ShowPasswordError
+        {
+            get => this.showpassworderror;
+            set => this.RaiseAndSetIfChanged(ref this.showpassworderror, value);
+        }
         public string Email
         {
             
@@ -31,33 +43,50 @@ namespace MusicPlayer.ViewModels
         public ReactiveCommand<Unit, Unit> LoginCommand { get; set; }
         public LoginVM(NavigationVM nav)
         {
-            LoginCommand = ReactiveCommand.Create(loginCommand);
+            var isInputValid = this.WhenAnyValue(x => x.Email, x => x.Password,
+                (email, password) => (!string.IsNullOrWhiteSpace(password)
+                && !string.IsNullOrWhiteSpace(email)));
+                
+            LoginCommand = ReactiveCommand.CreateFromTask(loginCommand , isInputValid);
         }
-
-        private async void loginCommand()
+        private async Task loginCommand()
         {
-          //see if it exists in db
-          using (var dbcontext = new DatabaseContext())
+            //see if it exists in db
+            using (var dbcontext = new DatabaseContext())
             {
                 var user = await dbcontext.Credentials.FirstOrDefaultAsync(u => u.Email == this.Email);
                 if (user == null)
                 {
-                    //email not fund
+                    //email not found
+                    await ShowErrorEmail();
                     return;
                 }
                 if (user.Password != this.Password)
                 {
                     //inccorect password    
+                    await ShowErrorPassword();
                     return;
                 }
                 //good to go
-
-
-                
-
             }
-
-
         }
+        private async Task ShowErrorEmail()
+        {
+            ShowEmailError = true;
+            await Task.Delay(3000);
+            ShowEmailError = false;
+        }
+        private async Task ShowErrorPassword()
+        {
+            ShowPasswordError = true;
+            await Task.Delay(3000);
+            ShowPasswordError = false;
+        }
+      
+                
+           
+
+
+        
     }
 }

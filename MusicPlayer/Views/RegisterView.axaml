@@ -26,7 +26,7 @@
 		  Width="400"
 		  Height="400"
 		  
-		   Background ="{StaticResource ResourceKey=colorTwo}">
+		   Background ="White">
 
 
 		
@@ -52,12 +52,12 @@
 		
 		
 		
-		
 		<TextBox Watermark="Username"
 				 Text="{Binding Username, Mode=TwoWay}"
 				 Margin="30 , 50 , 30 , 0"
 			     VerticalContentAlignment="Bottom"
 				 CornerRadius="14"
+				 Background="GhostWhite"
 				>
 		</TextBox>
 		
@@ -66,7 +66,8 @@
 				 Grid.Row="1"
 				 Margin="30 , 50 , 30 , 0"
                  Text="{Binding Email ,Mode=TwoWay}"
-				 VerticalContentAlignment="Bottom">
+				 VerticalContentAlignment="Bottom"
+				 Background="GhostWhite">
 
 		</TextBox>
 		
@@ -77,12 +78,27 @@
 				 CornerRadius="14"
 		         Text="{Binding Password, Mode=TwoWay}"
 				 VerticalContentAlignment="Bottom"
+				 Background="GhostWhite"
 				 >
 		</TextBox>
-		
-		
-		
-		
+
+
+
+		<Button CornerRadius="12"
+				Grid.Row="0"
+				Width="80"
+				Height="30"
+				Margin="0 , 10 , 15 , 0"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Top"
+			    HorizontalContentAlignment="Center"
+				VerticalContentAlignment="Center"
+				FontSize="15"
+				Command ="{Binding CloseDialogCommand}"
+			    CommandParameter="{Binding $parent[dialogHostAvalonia:DialogHost]}"
+				Foreground="Black">
+			 Close
+		</Button>
 		
 		
 		<Button Grid.Row="3"
@@ -92,11 +108,11 @@
 				Height="30"
 				FontSize="15"
 				HorizontalContentAlignment="Center"
-				Foreground="Black"
-			    Background="Purple"
+				Foreground="White"
+			    Background="{StaticResource ResourceKey=colorTwo}"
 			    VerticalContentAlignment="Bottom"
 				Command="{Binding RegisterCommand}"
-				CommandParameter="{Binding $parent[dialogHostAvalonia:DialogHost]}"
+				
 				
 				>
 			Register

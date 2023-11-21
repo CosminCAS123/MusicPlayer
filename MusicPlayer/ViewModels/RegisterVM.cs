@@ -50,18 +50,25 @@ namespace MusicPlayer.ViewModels
             set => this.RaiseAndSetIfChanged(ref email, value);
         }
 
-        public ReactiveCommand<DialogHost, Unit> RegisterCommand { get; }
+        public ReactiveCommand<Unit, Unit> RegisterCommand { get; }
+        public ReactiveCommand<DialogHost , Unit> CloseDialogCommand { get; }
+
         public RegisterVM()
         {
-
+            
             var isInputValid = this.WhenAnyValue(x => x.Username, x => x.Password, x => x.Email,
                 (username, password, email) => (!string.IsNullOrWhiteSpace(username)
                 && !string.IsNullOrWhiteSpace(password)
                 && !string.IsNullOrWhiteSpace(email)));
-            RegisterCommand = ReactiveCommand.Create<DialogHost>(AddAccountToDB, isInputValid);
+            RegisterCommand = ReactiveCommand.Create(AddAccountToDB, isInputValid);
+            CloseDialogCommand = ReactiveCommand.Create<DialogHost>(CloseDialog);
 
         }
-        private async void AddAccountToDB(DialogHost dialog)
+        private void CloseDialog(DialogHost dialog)
+        {
+            dialog.CurrentSession!.Close();
+        }
+        private async void AddAccountToDB()
         {
             //add
             using (var context = new DatabaseContext())
@@ -69,7 +76,7 @@ namespace MusicPlayer.ViewModels
                 var user = new User(Utilities.GenerateUserId(), Username!, Password!, Email!);
 
                 var exists = await context.Credentials
-                    .FirstOrDefaultAsync(user => user.Email == this.Email);
+                    .FirstOrDefaultAsync(user => user.Email == this.Email).ConfigureAwait(false);
 
                 if (exists != null)
                 {
@@ -84,9 +91,9 @@ namespace MusicPlayer.ViewModels
                     await context.SaveChangesAsync();
                 }
             }
-            //close dialog
-            await Task.Delay(TIME_BEFORE_CLOSING_DIALOG);
-            dialog.CurrentSession!.Close();
+       
+    
+             
 
         }
         private async void CloseEmailError()
